@@ -1,0 +1,46 @@
+name: Sync Upstream and Update Mirrors
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  sync-and-patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Add upstream repository
+        run: |
+          git remote add upstream https://github.com/oxalica/rust-overlay.git
+          git fetch upstream
+
+      - name: Merge upstream changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@users.noreply.github.com"
+          git merge upstream/master --allow-unrelated-histories -m "Merge upstream"
+
+      - name: Replace Rust URLs
+        run: |
+          sed -i 's|https://static.rust-lang.org|https://mirrors.ustc.edu.cn/rust-static|g' lib/dist-root.nix
+          sed -i 's|https://static.rust-lang.org|https://mirrors.ustc.edu.cn/rust-static|g' tests/default.nix
+
+      - name: Commit changes
+        id: commit
+        run: |
+          git add lib/dist-root.nix default.nix
+          if ! git diff-index --quiet HEAD --; then
+            git commit -m "chore: Update Rust URLs to USTC mirror"
+            echo "has_commit=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_commit=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Push changes
+        if: steps.commit.outputs.has_commit == 'true'
+        run: git push origin HEAD:master

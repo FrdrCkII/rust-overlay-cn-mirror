@@ -1,1 +1,1 @@
-"https://static.rust-lang.org/dist"
+"https://mirrors.ustc.edu.cn/rust-static/dist"

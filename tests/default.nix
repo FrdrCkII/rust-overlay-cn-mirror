@@ -59,13 +59,13 @@ optionalAttrs
   {
     url-no-arch =
       assertUrl stable."1.48.0".rust-src
-        "https://static.rust-lang.org/dist/2020-11-19/rust-src-1.48.0.tar.xz";
+        "https://mirrors.ustc.edu.cn/rust-static/dist/2020-11-19/rust-src-1.48.0.tar.xz";
     url-kind-nightly =
       assertUrl nightly.${testNightly.date}.rustc
-        "https://static.rust-lang.org/dist/${testNightly.date}/rustc-nightly-${rustHostPlatform}.tar.xz";
+        "https://mirrors.ustc.edu.cn/rust-static/dist/${testNightly.date}/rustc-nightly-${rustHostPlatform}.tar.xz";
     url-kind-beta =
       assertUrl beta.${testBeta.date}.rustc
-        "https://static.rust-lang.org/dist/${testBeta.date}/rustc-beta-${rustHostPlatform}.tar.xz";
+        "https://mirrors.ustc.edu.cn/rust-static/dist/${testBeta.date}/rustc-beta-${rustHostPlatform}.tar.xz";
 
     name-stable = assertEq stable."1.48.0".rustc.name "rustc-1.48.0-${rustHostPlatform}";
     name-beta =
@@ -79,13 +79,13 @@ optionalAttrs
 
     url-kind-2 =
       assertUrl stable."1.48.0".cargo
-        "https://static.rust-lang.org/dist/2020-11-19/cargo-1.48.0-${rustHostPlatform}.tar.xz";
+        "https://mirrors.ustc.edu.cn/rust-static/dist/2020-11-19/cargo-1.48.0-${rustHostPlatform}.tar.xz";
     url-kind-0 =
       assertUrl stable."1.47.0".cargo
-        "https://static.rust-lang.org/dist/2020-10-08/cargo-0.48.0-${rustHostPlatform}.tar.xz";
+        "https://mirrors.ustc.edu.cn/rust-static/dist/2020-10-08/cargo-0.48.0-${rustHostPlatform}.tar.xz";
     url-kind-1 =
       assertUrl stable."1.34.2".llvm-tools-preview
-        "https://static.rust-lang.org/dist/2019-05-14/llvm-tools-1.34.2%20(6c2484dc3%202019-05-13)-${rustHostPlatform}.tar.xz";
+        "https://mirrors.ustc.edu.cn/rust-static/dist/2019-05-14/llvm-tools-1.34.2%20(6c2484dc3%202019-05-13)-${rustHostPlatform}.tar.xz";
 
     # 1.30.0 has `rustfmt` still in preview state.
     rename-unavailable = assertEq (stable."1.30.0" ? rustfmt) false;
@@ -231,7 +231,7 @@ optionalAttrs
 // optionalAttrs (system == "aarch64-darwin") {
   url-forward =
     assertUrl nightly.${testNightly.date}.rust-docs
-      "https://static.rust-lang.org/dist/${testNightly.date}/rust-docs-nightly-x86_64-apple-darwin.tar.xz";
+      "https://mirrors.ustc.edu.cn/rust-static/dist/${testNightly.date}/rust-docs-nightly-x86_64-apple-darwin.tar.xz";
   aarch64-darwin-use-x86-docs = rust-bin.stable."1.51.0".default.override {
     targets = [ "x86_64-apple-darwin" ];
     targetExtensions = [ "rust-docs" ];
