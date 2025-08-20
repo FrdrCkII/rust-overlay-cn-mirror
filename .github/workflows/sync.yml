@@ -42,7 +42,6 @@ jobs:
         id: commit
         run: |
           git add lib/dist-root.nix default.nix
-          git add .github/workflows/{ci.yaml,sync-channels.yaml,update-stable.yaml}
           if ! git diff-index --quiet HEAD --; then
             git commit -m "chore: Update Rust URLs to USTC mirror"
             echo "has_commit=true" >> $GITHUB_OUTPUT
