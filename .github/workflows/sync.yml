@@ -36,7 +36,7 @@ jobs:
         run: |
           sed -i 's|https://static.rust-lang.org|https://mirrors.ustc.edu.cn/rust-static|g' lib/dist-root.nix
           sed -i 's|https://static.rust-lang.org|https://mirrors.ustc.edu.cn/rust-static|g' tests/default.nix
-          rm .github/workflows/{ci.yaml,sync-channels.yaml,update-stable.yaml}
+          rm -f .github/workflows/{ci.yaml,sync-channels.yaml,update-stable.yaml}
 
       - name: Commit changes
         id: commit
