@@ -23,14 +23,11 @@ jobs:
 
       - name: Add upstream repository
         run: |
-          git remote add upstream https://github.com/oxalica/rust-overlay.git
-          git fetch upstream
-
-      - name: Merge upstream changes
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@users.noreply.github.com"
-          git merge upstream/master --allow-unrelated-histories -m "Merge upstream"
+          rm -rf ./*
+          git clone https://github.com/oxalica/rust-overlay.git
+          cp -rf ./rust-overlay/* ./*
+          rm -rf ./rust-overlay/
+          rm -f .github/workflows/{ci.yaml,sync-channels.yaml,update-stable.yaml}
 
       - name: Replace Rust URLs
         run: |
@@ -41,7 +38,9 @@ jobs:
       - name: Commit changes
         id: commit
         run: |
-          git add lib/dist-root.nix default.nix
+          git config user.name "GitHub Actions"
+          git config user.email "actions@users.noreply.github.com"
+          git add *
           if ! git diff-index --quiet HEAD --; then
             git commit -m "chore: Update Rust URLs to USTC mirror"
             echo "has_commit=true" >> $GITHUB_OUTPUT
